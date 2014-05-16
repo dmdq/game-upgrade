@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" class="body-error">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>登陆界面</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<link href="static/css/login.css" rel="stylesheet">
+<link rel="alternate stylesheet" type="text/css" media="screen" title="green-theme" href="static/css/green.css">
+<link rel="alternate stylesheet" type="text/css" media="screen" title="blue-theme" href="static/css/blue.css">
+<link rel="alternate stylesheet" type="text/css" media="screen" title="orange-theme" href="static/css/orange.css">
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body screen_capture_injected="true">
+<div id="wrapper">
+	<div class="form-login" >
+		<div class="header">
+			<a href="javascript:void(0);" class="link-head-left"><i class="icon-home"></i></a>
+			<span>注册</span>
+			<a href="javascript:void(0);" tabindex="1" class="link-head-right main-item"><i class="icon-config"></i></a>
+			<div class="config-box">
+				<div class="colors">
+					<a href="javascript:chooseStyle('blue-theme', 30)"><img src="static/images/blue.png" alt=""></a>
+					<a href="javascript:chooseStyle('orange-theme', 30)"><img src="static/images/orange.png" alt=""></a>
+					<a href="javascript:chooseStyle('green-theme', 30)"><img src="static/images/green.png" alt=""></a>
+					<a href="javascript:chooseStyle('none', 30)"><img src="static/images/red.png" alt=""></a>
+					<div class="clear">
+					</div>
+				</div>
+				<div class="style-bg">
+					
+				</div>
+			</div>
+		</div>
+		<div class="avatar">
+			<img src="static/images/avatar.png" alt="">
+		</div>
+		 <div class="inputs">
+		 	<!-- 
+			<input id="" name="" type="text" required placeholder="账号" />
+			 -->
+			<input id="user" name="" type="email" required placeholder="Email" />
+			<input id="password" name="" type="password" required  placeholder="密码" />
+			<input id="password_2" name="" type="password" required  placeholder="再次输入密码" />
+		</div>
+		
+		<div class="link-1">
+			<input type="checkbox" id="c2" name="cc" checked="checked" />
+			<label for="c2"><span></span> 同意服务条款?</label>
+		</div>
+		<div class="clear"></div>		
+		<div class="button-login"><input type="submit" value="注册" onclick="register();"></div>
+		<div class="footer-login">
+			<ul class="social-links">
+				<li class="twitter"><a href="javascript:void(0);"><span>twitter</span></a></li>
+				<li class="google-plus"><a href="javascript:void(0);"><span>google</span></a></li>
+				<li class="facebook"><a href="javascript:void(0);"><span>facebook</span></a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="clear">
+	</div>
+	<div class="link-to-page">
+		已经有账号? <a href="login.html">立即登陆!</a>
+	</div>
+</div>
+<script src="static/js/jquery.min.js"></script>
+<script src="static/js/user.action.js"></script>
+<script src="static/js/styleswitcher.js"></script>
+</body>
+</html>
