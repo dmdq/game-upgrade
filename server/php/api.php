@@ -5,7 +5,7 @@
 @require_once(dirname(__FILE__).'/pclzip.lib.php');
 
 if(isset($_REQUEST["action"])){
-	$action = 	$_REQUEST["action"];
+	$action = $_REQUEST["action"];
 	if($action=="register"){
 		if(isset($_REQUEST["user"])&&isset($_REQUEST["password"])){
 			$user = $_REQUEST["user"];
@@ -13,7 +13,7 @@ if(isset($_REQUEST["action"])){
 			$user_data_file = dirname(__FILE__).'/user.db';
 			$flag = false;
 			if(@!file_exists($user_data_file)){
-				file_put_contents($user_data_file,json_encode(array($user=>array("user"=>$user,"password"=>$password))));
+				file_put_contents($user_data_file,json_encode(array($user=>array("user"=>$user,"password"=>base64_encode(strrev($password))))));
 				$flag = true;
 			}else{
 				$user_file_content = file_get_contents($user_data_file);
@@ -23,7 +23,7 @@ if(isset($_REQUEST["action"])){
 					return;
 				}else{
 					$flag = true;
-					$user_data->$user = array("user"=>$user,"password"=>$password);
+					$user_data->$user = array("user"=>$user,"password"=>base64_encode(strrev($password)));
 					file_put_contents($user_data_file,json_encode($user_data));
 				}				
 			}
@@ -45,7 +45,7 @@ if(isset($_REQUEST["action"])){
 				$user_data = json_decode($user_file_content);
 				if(@$user_data->$user){
 					$_data = $user_data->$user;
-					if($password==$_data->password){
+					if(base64_encode(strrev($password))==$_data->password){
 						$expire = time() + 3600; // 设置1小时的有效期
 						setcookie ("game-version-user", $user, $expire,'/'); // 设置一个名字为var_name的cookie，并制定了有效期
 						$code = 1;
@@ -67,6 +67,17 @@ if(isset($_REQUEST["action"])){
 	}elseif("logout"==$action){
 		setcookie("game-version-user","",time()-3600,'/');
 		echo json_encode(array("code"=>1));
+	}elseif("dropfile"==$action){
+		if(isset($_REQUEST["filename"])){
+			$filename = $_REQUEST["filename"];
+			$file = ROOT_PATH.$filename;
+			if(file_exists($file)){
+				@unlink($file);
+				echo 1;
+			}else{
+				echo 0;
+			}
+		}
 	}
 }
 
@@ -87,7 +98,7 @@ if(isset($_REQUEST["user"])&&isset($_REQUEST["version"])&&isset($_REQUEST["app"]
 	
 	if(!@file_exists($version_file)){
 		//未发现客户端版本资源映射表
-		echo "Not found version.json";	
+		echo '{"msg":"Not found version.json"}';
 		return ;
 	}
 	//索引内容
@@ -100,7 +111,7 @@ if(isset($_REQUEST["user"])&&isset($_REQUEST["version"])&&isset($_REQUEST["app"]
 	 */
 	if(!endWith($client_version,".zip")){
 		//不支持的版本类型
-		echo "File type not allowed";
+		echo '{"msg":"File type not allowed"}';
 		return;
 	}
 	//版本历史列表
@@ -116,7 +127,7 @@ if(isset($_REQUEST["user"])&&isset($_REQUEST["version"])&&isset($_REQUEST["app"]
 	 * 检查是否已经生产版本记录
 	 */
 	if(empty($version_list)){
-		echo "Not found version list";
+		echo '{"msg":"Not found version list"}';
 		return;
 	}
 	//当前最新的版本

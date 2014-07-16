@@ -74,6 +74,12 @@ Date.prototype.format = function(format) {
 	function msgbox($msg){
 		alert($msg);
 	}
+	
+	function dropFile(filename){
+		$.get('server/php/api.php',{action:"dropfile",filename:filename},function(data){
+			console.log("dropFile:"+filename+" ,status:"+data);
+		});
+	}
 	String.prototype.endWith=function(str){
 		if(str==null||str==""||this.length==0||str.length>this.length)
 		  return false;
@@ -296,7 +302,7 @@ Date.prototype.format = function(format) {
         </td>
         <td>
             {% if (file.deleteUrl) { %}
-                <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" onclick="dropFile('{%=file.deleteUrl%}')"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
                     <i class="glyphicon glyphicon-trash"></i>
                     <span>删除</span>
                 </button>

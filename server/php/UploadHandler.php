@@ -247,10 +247,15 @@ class UploadHandler
     }
 
     protected function set_additional_file_properties($file) {
-        $file->deleteUrl = $this->options['script_url']
-            .$this->get_query_separator($this->options['script_url'])
-            .$this->get_singular_param_name()
-            .'='.rawurlencode($file->name).'&app='.$this->options['app_name'].'&user='.$this->options['user_name'];
+		$userName = $this->options['user_name'];
+		$appName = $this->options['app_name'];
+		$fileName  =$file->name;
+//        $file->deleteUrl = $this->options['script_url']
+//            .$this->get_query_separator($this->options['script_url'])
+//            .$this->get_singular_param_name()
+//            .'='.rawurlencode($file->name).'&app='.$appName.'&user='.$userName;
+		
+        $file->deleteUrl = VERSION_BASE.$userName.'/'.$appName.'/'.$fileName;
         $file->deleteType = $this->options['delete_type'];
         if ($file->deleteType !== 'DELETE') {
             $file->deleteUrl .= '&_method=DELETE';
